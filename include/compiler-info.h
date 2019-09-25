@@ -11,7 +11,9 @@
 #    if (__STDC_VERSION__ >= 199409L)
 #        if (__STDC_VERSION__ >= 199901L)
 #           if (__STDC_VERSION__ >= 201112L)
+               // Define both here for c99 and later features.
 #              define PIKAXE_CVERS_11
+#              define PIKAXE_CVERS_99
 #           else // !(__STDC_VERSION__ >= 201112L)
 #              define PIKAXE_CVERS_99
 #           endif // (__STDC_VERSION__ >= 201112L)
@@ -44,13 +46,17 @@ typedef unsigned __int16 uint16_t;
 typedef unsigned __int32 uint32_t;
 typedef unsigned __int64 uint64_t;
 #else // _MSC_VER
-#   ifdef HAVE_STDINT
+#   if defined(HAVE_STDINT) || __STDC_VERSION__ >= 199901L
 #      include <stdint.h>
 #   else // !HAVE_STDINT
        // Determine integer sizes by limits.h
 #      if defined(UINT_MAX) && UINT_MAX == 0xffffffff
            typedef int int32_t;
            typedef unsigned int uint32_t;
+#      endif
+#      if defined(ULONG_MAX) && ULONG_MAX == 0xffffffffffffffff
+           typedef long int64_t;
+           typedef unsigned long uint64_t;
 #      endif
 #   endif
 #endif // !_MSC_VER
@@ -61,13 +67,38 @@ typedef unsigned __int64 uint64_t;
 #  endif
 #endif
 
-#ifdef HABE_STDBOOL
+#ifdef HAVE_STDBOOL
 #  include <stdbool.h>
 #else
 #   define true 1
 #   define false 0
 #   define bool int
 #endif
+
+// Debugging tools
+#include <stdio.h>
+#ifdef __GNUC__
+#  define  PIKAXE_DEBUG(msg) fprintf(stderr, \
+                "PIKAXE-DEBUG: %s, line: %u, function: %s, file: %s\n", \
+                msg, (unsigned)__LINE__, __FUNCTION__, __FILE__)
+#else // __GNUC__
+#  ifdef PIKAXE_CVERS_99
+#      define  PIKAXE_DEBUG(msg) fprintf(stderr, \
+                   "PIKAXE-DEBUG: %s, line: %u, function: %s, file: %s\n", \
+                   msg, (unsigned)__LINE__, __func__, __FILE__)
+#  else
+#     define  PIKAXE_DEBUG(msg) fprintf(stderr, \
+                   "PIKAXE-DEBUG: %s, line: %u, file: %s\n", \
+                   msg, (unsigned)__LINE__, __FILE__)
+#  endif
+#endif // !__GNUC__
+
+// Advancedment of void*
+#ifdef __GNUC__
+#  define PIKAXE_ADV_PTR(ptr, off) (ptr + off)
+#else // __GNUC__
+#  define PIKAXE_ADV_PTR(ptr, off) ((char*)ptr + off)
+#endif // !__GNUC__    
 
 
 #endif // PIKAXE_COMPILER_INFO_H
