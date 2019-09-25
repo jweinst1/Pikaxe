@@ -28,3 +28,7 @@ option(WITH_testing "Allows tests to be run" ON)
 if(WITH_testing MATCHES ON)
    enable_testing()
 endif(WITH_testing MATCHES ON)
+
+add_subdirectory(include)
+
+add_subdirectory(src)
