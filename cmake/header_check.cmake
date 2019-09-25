@@ -1,10 +1,7 @@
 
 # Header Check Script #
 
-
-
 # This file is meant to be run as part of a CMakeLists.txt
-
 # Do not run this directly
 
 
@@ -27,3 +24,12 @@ if(HAVE_WCHAR_HEADER)
 else(HAVE_WCHAR_HEADER)
    message("** wchar.h not found")
 endif(HAVE_WCHAR_HEADER)
+
+find_file(HAVE_STDBOOL_HEADER stdbool.h)
+
+if(HAVE_STDBOOL_HEADER)
+   message("** stdbool.h found")
+   add_definitions(-DHAVE_STDBOOL)
+else(HAVE_STDBOOL_HEADER)
+   message("** stdbool.h not found")
+endif(HAVE_STDBOOL_HEADER)
