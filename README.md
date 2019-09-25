@@ -1,2 +1,3 @@
-# cmake-win-template
-Template Repo for CMake Projects on windows
+# Pikaxe
+
+*An expression language for fast, lean data mining* 
