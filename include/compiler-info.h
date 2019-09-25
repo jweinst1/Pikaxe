@@ -98,7 +98,9 @@ typedef unsigned __int64 uint64_t;
 #  define PIKAXE_ADV_PTR(ptr, off) (ptr + off)
 #else // __GNUC__
 #  define PIKAXE_ADV_PTR(ptr, off) ((char*)ptr + off)
-#endif // !__GNUC__    
+#endif // !__GNUC__
+
+#include <stdlib.h> 
 
 
 #endif // PIKAXE_COMPILER_INFO_H
