@@ -20,7 +20,8 @@ typedef enum {
     PIK_INST_CAP_S = 3,
     PIK_INST_GRP_N = 4,
     PIK_INST_GRP_U = 5,
-    PIK_INST_GRP_D = 6
+    PIK_INST_GRP_D = 6,
+    PIK_INST_GRP_RE = 7
 } Pik_inst_t;
 
 typedef unsigned char Pik_ins_t;
