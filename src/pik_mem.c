@@ -24,6 +24,8 @@ static int _pik_mem_init(PikMachine* mach, size_cap, int capture, int inst)
         mach->instructions_cap = cap;
         return 1;    
     }
+    
+    return 1;
 }
 
 int pik_mem_init_capture(PikMachine* mach, size_t cap)
@@ -59,16 +61,36 @@ Pik_ins_t* pik_mem_rel_inst(PikMachine* mach)
     return gotins;  
 }
 
-
+static int _pik_mem_grow(PikMachine* mach, size_t addon, int capt, int ins)
+{
+    if(capt) {
+        mach->capture_cap += addon;
+        mach->capture = rellaoc(mach->capture, mach->capture_cap);
+        if(mach->capture == NULL) {
+            sprintf(mach->err_mes, "Err:%s\n", "Cannot grow capture buffer");
+            return 0;
+        }
+        return 1;
+    }
+    
+    if(ins) {
+        mach->instructions_cap += addon;
+        mach->instructions = rellaoc(mach->instructions, mach->instructions_cap);
+        if(mach->instructions == NULL) {
+            sprintf(mach->err_mes, "Err:%s\n", "Cannot grow instructions buffer");
+            return 0;
+        }
+        return 1;     
+    }
+    return 1;
+}
 
 int pik_mem_grow_capture(PikMachine* mach, size_t addon)
 {
-    // to do
-    return 1;
+    return _pik_mem_grow(mach, addon, 1, 0);
 }
 
 int pik_mem_grow_inst(PikMachine* mach, size_t addon)
 {
-    // to do
-    return 1;
+    return _pik_mem_grow(mach, addon, 0, 1);
 }
