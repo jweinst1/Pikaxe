@@ -5,7 +5,9 @@
 
 int pik_mem_init_capture(PikMachine* mach, size_t cap);
 
-// int pik_mem_init_inst(PikMachine* mach, size_t cap);
+int pik_mem_init_inst(PikMachine* mach, size_t cap);
+
+int pik_mem_init_all(PikMachine* mach, size_t cap);
 
 
 #endif // PIKAXE_PIK_MEM_H
