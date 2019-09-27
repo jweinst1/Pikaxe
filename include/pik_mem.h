@@ -23,5 +23,7 @@ int pik_mem_grow_capture(PikMachine* mach, size_t addon);
 
 int pik_mem_grow_inst(PikMachine* mach, size_t addon);
 
+void pik_mem_del_mach(PikMachine* mach);
+
 
 #endif // PIKAXE_PIK_MEM_H

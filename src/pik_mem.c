@@ -1,7 +1,7 @@
 #include "pik_mem.h"
 
 
-static int _pik_mem_init(PikMachine* mach, size_cap, int capture, int inst)
+static int _pik_mem_init(PikMachine* mach, size_t cap, int capture, int inst)
 {
     if(capture) {
         mach->capture = malloc(sizeof(Pik_grchr_t) * cap);
@@ -65,7 +65,7 @@ static int _pik_mem_grow(PikMachine* mach, size_t addon, int capt, int ins)
 {
     if(capt) {
         mach->capture_cap += addon;
-        mach->capture = rellaoc(mach->capture, mach->capture_cap);
+        mach->capture = realloc(mach->capture, mach->capture_cap);
         if(mach->capture == NULL) {
             sprintf(mach->err_mes, "Err:%s\n", "Cannot grow capture buffer");
             return 0;
@@ -75,7 +75,7 @@ static int _pik_mem_grow(PikMachine* mach, size_t addon, int capt, int ins)
     
     if(ins) {
         mach->instructions_cap += addon;
-        mach->instructions = rellaoc(mach->instructions, mach->instructions_cap);
+        mach->instructions = realloc(mach->instructions, mach->instructions_cap);
         if(mach->instructions == NULL) {
             sprintf(mach->err_mes, "Err:%s\n", "Cannot grow instructions buffer");
             return 0;
@@ -93,4 +93,14 @@ int pik_mem_grow_capture(PikMachine* mach, size_t addon)
 int pik_mem_grow_inst(PikMachine* mach, size_t addon)
 {
     return _pik_mem_grow(mach, addon, 0, 1);
+}
+
+void pik_mem_del_mach(PikMachine* mach)
+{
+    free(mach->capture);
+    free(mach->instructions);
+    mach->capture = NULL;
+    mach->instructions = NULL;
+    mach->capture_cap = 0;
+    mach->instructions_cap = 0;
 }
