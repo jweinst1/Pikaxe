@@ -19,6 +19,8 @@ Pik_grchr_t* pik_mem_rel_capt(PikMachine* mach);
  */
 Pik_ins_t* pik_mem_rel_inst(PikMachine* mach);
 
+// todo, need a reset option that accepts ownership of external pointer.
+
 int pik_mem_grow_capture(PikMachine* mach, size_t addon);
 
 int pik_mem_grow_inst(PikMachine* mach, size_t addon);

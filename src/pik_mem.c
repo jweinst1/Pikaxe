@@ -3,6 +3,7 @@
 
 static int _pik_mem_init(PikMachine* mach, size_t cap, int capture, int inst)
 {
+    PIKAXE_ERR_CLEAR(mach);
     if(capture) {
         mach->capture = malloc(sizeof(Pik_grchr_t) * cap);
         if(mach->capture == NULL) {

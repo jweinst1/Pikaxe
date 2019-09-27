@@ -36,4 +36,12 @@ typedef struct {
     char err_mes[PIKAXE_ERR_MAX_LEN];
 } PikMachine;
 
+#define PIKAXE_ERR_CLEAR(mach) (mach->err_mes[0] = '\0')
+#define PIKAXE_ERR_HAS(mach) (mach->err_mes[0] != '\0')
+
+#define PIKAXE_IS_INITIALIZED(mach) (mach->instructions != NULL && \
+                                     mach->instructions_cap != 0 && \
+                                     mach->capture != NULL && \
+                                     mach->capture_cap != 0)
+
 #endif // PIKAXE_PIK_MACHINE_H
