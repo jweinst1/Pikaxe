@@ -30,6 +30,7 @@ typedef struct {
     size_t capture_len;
     size_t capture_cap;
     Pik_grchr_t* capture;
+    Pik_grchr_t* last_seg;
     size_t instructions_len;
     size_t instructions_cap;
     Pik_ins_t* instructions;
